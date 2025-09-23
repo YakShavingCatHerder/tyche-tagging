@@ -11,7 +11,6 @@ Eliminate unallocated cloud spend with consistent, automated tagging across all 
 ## Supported Providers
 
 **AWS** - [terraform-aws-tyche-tags](./aws/) - Complete AWS resource tagging solution
-
 - **Azure** - Coming soon
 - **GCP** - Coming soon
 

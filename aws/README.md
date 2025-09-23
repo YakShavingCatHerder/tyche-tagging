@@ -11,14 +11,12 @@ This is the AWS provider module for Tyche Tagging. It provides consistent, autom
 This is the AWS provider submodule of the Tyche Tagging project. It provides a standardized set of tags for AWS resources to enable cost attribution, team accountability, and governance. It generates consistent tags across all AWS resource types and is designed to be used as part of the larger Tyche Tagging ecosystem.
 
 **This module is:**
-
 - An AWS-specific submodule of Tyche Tagging
 - Published to the Terraform Registry
 - Ready to use for AWS resource tagging
 - Part of a multi-cloud tagging solution
 
 **Use this module when you need:**
-
 - Consistent tagging across all AWS resources
 - Cost attribution and team accountability
 - Automated governance tags
@@ -37,7 +35,6 @@ This is the AWS provider submodule of the Tyche Tagging project. It provides a s
 This module is designed to be used directly in your Terraform configurations. Here's how to get started:
 
 1. **Create configuration file:**
-
 ```hcl
 # tyche.tfvars
 tyche_config = {
@@ -49,7 +46,6 @@ tyche_config = {
 ```
 
 2. **Use the module:**
-
 ```hcl
 module "tyche_tags" {
   source = "YakShavingCatHerder/tyche-tagging/aws"
@@ -69,7 +65,6 @@ resource "aws_instance" "web" {
 ```
 
 3. **Deploy:**
-
 ```bash
 terraform apply -var-file="tyche.tfvars"
 ```
@@ -77,7 +72,6 @@ terraform apply -var-file="tyche.tfvars"
 ## Generated Tags
 
 Every resource gets these standard tags:
-
 | Tag             | Example                       | Purpose               |
 | --------------- | ----------------------------- | --------------------- |
 | `Team`        | `platform-team`             | Cost attribution      |
@@ -100,7 +94,6 @@ Every resource gets these standard tags:
 This module has been validated using:
 
 ### Manual Testing
-
 ```bash
 # Test module initialization and planning
 cd examples/basic
@@ -114,7 +107,6 @@ terraform plan -var-file="test.tfvars"
 ### Generated Tags Example
 
 When configured with:
-
 ```hcl
 team        = "test-team"
 project     = "test-project" 
@@ -123,7 +115,6 @@ cost_center = "engineering"
 ```
 
 The module generates these tags:
-
 - `Team`: `test-team`
 - `Project`: `test-project`
 - `Environment`: `dev`
@@ -135,7 +126,6 @@ The module generates these tags:
 - `AWSRegion`: `us-east-1`
 
 ### Input Validation
-
 - Empty team names are rejected
 - Invalid environments are rejected
 - Empty project names are rejected
@@ -148,7 +138,7 @@ See the [examples/](./examples/) directory for complete usage examples.
 ## Enterprise Features
 
 Looking for advanced features like compliance scanning, cost optimization, or ML-powered attribution?
-Contact us about [Tyche Enterprise](mailto:enterprise@tyche.dev) solutions.
+Contact us about [Tyche Enterprise](mailto:yakshavingcatherder@pm.me) solutions.
 
 ## License
 

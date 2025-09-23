@@ -27,8 +27,8 @@ jobs:
       with:
         terraform_version: ${{ env.TF_VERSION }}
 
-    - name: Terraform Format
-      run: terraform fmt -recursive
+    - name: Terraform Format Check
+      run: terraform fmt -check -recursive
 
     - name: Terraform Validate
       run: |
@@ -40,3 +40,4 @@ jobs:
         cd examples/basic
         terraform init
         terraform validate
+        terraform plan

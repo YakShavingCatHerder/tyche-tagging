@@ -11,6 +11,10 @@ Eliminate unallocated cloud spend with consistent, automated tagging across all 
 ## Supported Providers
 
 **AWS** - [terraform-aws-tyche-tags](./aws/) - Complete AWS resource tagging solution
+<<<<<<< HEAD
+=======
+
+>>>>>>> fa17ece ([ITER0] Update dir structure to match Tf Registry expectations)
 - **Azure** - Coming soon
 - **GCP** - Coming soon
 

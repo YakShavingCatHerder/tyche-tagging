@@ -1,40 +1,27 @@
-# Terraform AWS Tyche Tags
+# Tyche Tagging
 
+**Standardized cloud resource tagging for cost attribution and team accountability.**
 
-**Standardized AWS resource tagging for cost attribution and team accountability.**
+Eliminate unallocated cloud spend with consistent, automated tagging across all your cloud resources.
 
-Eliminate unallocated cloud spend with consistent, automated tagging across all your AWS resources.
+## Supported Providers
 
-## Features
-
-- **Consistent tagging** across all AWS resource types
-- **Cost attribution** with team, project, and environment tracking
-- **Automatic governance tags** (creation date, owner, managed by)
-- **AWS context** (account ID, region) for multi-account enterprises
-- **Flexible configuration** via simple tfvars files
+- **AWS** - [terraform-aws-tyche-tags](./aws/) - Complete AWS resource tagging solution
+- **Azure** - Coming soon
+- **GCP** - Coming soon
 
 ## Quick Start
 
-1. **Create configuration file:**
-```hcl
-# tyche.tfvars
-tyche_config = {
-  team        = "platform-team"
-  project     = "user-service"
-  environment = "prod"
-  cost_center = "engineering"
-}
-```
+### AWS
 
-2. **Use the module:**
 ```hcl
 module "tyche_tags" {
-  source = "YakShavingCatHerder/tyche-tags/aws"
+  source = "YakShavingCatHerder/tyche-tagging/aws"
   
-  team                = var.tyche_config.team
-  project             = var.tyche_config.project
-  environment         = var.tyche_config.environment
-  cost_center         = var.tyche_config.cost_center
+  team                = "platform-team"
+  project             = "user-service"
+  environment         = "prod"
+  cost_center         = "engineering"
   organization_domain = "company.com"
 }
 
@@ -45,80 +32,38 @@ resource "aws_instance" "web" {
 }
 ```
 
-3. **Deploy:**
-```bash
-terraform apply -var-file="tyche.tfvars"
-```
+## Features
+
+- **Consistent tagging** across all cloud resource types
+- **Cost attribution** with team, project, and environment tracking
+- **Automatic governance tags** (creation date, owner, managed by)
+- **Multi-cloud context** (account ID, region) for enterprise deployments
+- **Flexible configuration** via simple tfvars files
 
 ## Generated Tags
 
 Every resource gets these standard tags:
 
-| Tag | Example | Purpose |
-|-----|---------|---------|
-| `Team` | `platform-team` | Cost attribution |
-| `Project` | `user-service` | Project tracking |
-| `Environment` | `prod` | Environment isolation |
-| `CostCenter` | `engineering` | Financial allocation |
-| `Owner` | `platform-team@company.com` | Contact info |
-| `ManagedBy` | `terraform` | Governance |
-| `CreatedDate` | `2024-09-18` | Lifecycle tracking |
-| `AWSAccount` | `123456789012` | Multi-account context |
-| `AWSRegion` | `us-east-1` | Regional context |
+| Tag             | Example                       | Purpose               |
+| --------------- | ----------------------------- | --------------------- |
+| `Team`        | `platform-team`             | Cost attribution      |
+| `Project`     | `user-service`              | Project tracking      |
+| `Environment` | `prod`                      | Environment isolation |
+| `CostCenter`  | `engineering`               | Financial allocation  |
+| `Owner`       | `platform-team@company.com` | Contact info          |
+| `ManagedBy`   | `terraform`                 | Governance            |
+| `CreatedDate` | `2024-09-18`                | Lifecycle tracking    |
+| `AWSAccount`  | `123456789012`              | Multi-account context |
+| `AWSRegion`   | `us-east-1`                 | Regional context      |
 
 ## Requirements
 
 - Terraform >= 1.0
-- AWS Provider >= 4.0
-
-## Validation
-
-This module has been validated using:
-
-### Manual Testing
-```bash
-# Test module initialization and planning
-cd examples/basic
-terraform init
-terraform plan -var-file="test.tfvars"
-# ✅ Result: Module loads successfully, no errors
-# ✅ Result: Tags generated correctly for all resource types
-# ✅ Result: AWS context (account, region) populated automatically
-```
-
-### Generated Tags Example
-When configured with:
-```hcl
-team        = "test-team"
-project     = "test-project" 
-environment = "dev"
-cost_center = "engineering"
-```
-
-The module generates these tags:
-- `Team`: `test-team`
-- `Project`: `test-project`
-- `Environment`: `dev`
-- `CostCenter`: `engineering`
-- `Owner`: `test-team@company.com`
-- `ManagedBy`: `terraform`
-- `CreatedDate`: `2024-09-18`
-- `AWSAccount`: `975050275983`
-- `AWSRegion`: `us-east-1`
-
-### Input Validation
-- ✅ Empty team names are rejected
-- ✅ Invalid environments are rejected  
-- ✅ Empty project names are rejected
-- ✅ Additional tags are merged correctly
-
-## Examples
-
-See the [examples/](./examples/) directory for complete usage examples.
+- Cloud Provider >= 4.0 (AWS), >= 3.0 (Azure), >= 4.0 (GCP)
 
 ## Enterprise Features
 
-Looking for advanced features like compliance scanning, cost optimization, or ML-powered attribution? 
+Looking for advanced features like compliance scanning, cost optimization, or ML-powered attribution?
 Contact us about [Tyche Enterprise](mailto:enterprise@tyche.dev) solutions.
 
 ## License

@@ -17,10 +17,10 @@ organization_domain = "company.com"
 
 # Optional: Additional tags specific to your organization
 additional_tags = {
-  "BusinessUnit"    = "engineering"
-  "Application"     = "user-management"
-  "Compliance"      = "sox"
-  "BackupRequired"  = "true"
+  "BusinessUnit"   = "engineering"
+  "Application"    = "user-management"
+  "Compliance"     = "sox"
+  "BackupRequired" = "true"
 }
 
 # Future: Enterprise features (coming soon)

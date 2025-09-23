@@ -47,14 +47,14 @@ module "tyche_tags" {
 resource "aws_instance" "example" {
   ami           = "ami-0abcdef1234567890"
   instance_type = "t3.micro"
-  
+
   tags = module.tyche_tags.tags
 }
 
 # Example: Apply specialized tags to an S3 bucket
 resource "aws_s3_bucket" "example" {
   bucket = "example-bucket-${random_string.suffix.result}"
-  
+
   tags = module.tyche_tags.tags_storage
 }
 

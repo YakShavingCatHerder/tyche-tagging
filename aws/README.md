@@ -11,10 +11,10 @@ This is the AWS provider module for Tyche Tagging. It provides consistent, autom
 This is the AWS provider submodule of the Tyche Tagging project. It provides a standardized set of tags for AWS resources to enable cost attribution, team accountability, and governance. It generates consistent tags across all AWS resource types and is designed to be used as part of the larger Tyche Tagging ecosystem.
 
 **This module is:**
-- ✅ An AWS-specific submodule of Tyche Tagging
-- ✅ Published to the Terraform Registry
-- ✅ Ready to use for AWS resource tagging
-- ✅ Part of a multi-cloud tagging solution
+- An AWS-specific submodule of Tyche Tagging
+- Published to the Terraform Registry
+- Ready to use for AWS resource tagging
+- Part of a multi-cloud tagging solution
 
 **Use this module when you need:**
 - Consistent tagging across all AWS resources
@@ -72,18 +72,17 @@ terraform apply -var-file="tyche.tfvars"
 ## Generated Tags
 
 Every resource gets these standard tags:
-
-| Tag | Example | Purpose |
-|-----|---------|---------|
-| `Team` | `platform-team` | Cost attribution |
-| `Project` | `user-service` | Project tracking |
-| `Environment` | `prod` | Environment isolation |
-| `CostCenter` | `engineering` | Financial allocation |
-| `Owner` | `platform-team@company.com` | Contact info |
-| `ManagedBy` | `terraform` | Governance |
-| `CreatedDate` | `2024-09-18` | Lifecycle tracking |
-| `AWSAccount` | `123456789012` | Multi-account context |
-| `AWSRegion` | `us-east-1` | Regional context |
+| Tag             | Example                       | Purpose               |
+| --------------- | ----------------------------- | --------------------- |
+| `Team`        | `platform-team`             | Cost attribution      |
+| `Project`     | `user-service`              | Project tracking      |
+| `Environment` | `prod`                      | Environment isolation |
+| `CostCenter`  | `engineering`               | Financial allocation  |
+| `Owner`       | `platform-team@company.com` | Contact info          |
+| `ManagedBy`   | `terraform`                 | Governance            |
+| `CreatedDate` | `2024-09-18`                | Lifecycle tracking    |
+| `AWSAccount`  | `123456789012`              | Multi-account context |
+| `AWSRegion`   | `us-east-1`                 | Regional context      |
 
 ## Requirements
 
@@ -100,12 +99,13 @@ This module has been validated using:
 cd examples/basic
 terraform init
 terraform plan -var-file="test.tfvars"
-# ✅ Result: Module loads successfully, no errors
-# ✅ Result: Tags generated correctly for all resource types
-# ✅ Result: AWS context (account, region) populated automatically
+# Result: Module loads successfully, no errors
+# Result: Tags generated correctly for all resource types
+# Result: AWS context (account, region) populated automatically
 ```
 
 ### Generated Tags Example
+
 When configured with:
 ```hcl
 team        = "test-team"
@@ -126,10 +126,10 @@ The module generates these tags:
 - `AWSRegion`: `us-east-1`
 
 ### Input Validation
-- ✅ Empty team names are rejected
-- ✅ Invalid environments are rejected  
-- ✅ Empty project names are rejected
-- ✅ Additional tags are merged correctly
+- Empty team names are rejected
+- Invalid environments are rejected
+- Empty project names are rejected
+- Additional tags are merged correctly
 
 ## Examples
 
@@ -137,8 +137,8 @@ See the [examples/](./examples/) directory for complete usage examples.
 
 ## Enterprise Features
 
-Looking for advanced features like compliance scanning, cost optimization, or ML-powered attribution? 
-Contact us about [Tyche Enterprise](mailto:enterprise@tyche.dev) solutions.
+Looking for advanced features like compliance scanning, cost optimization, or ML-powered attribution?
+Contact us about [Tyche Enterprise](mailto:yakshavingcatherder@pm.me) solutions.
 
 ## License
 

@@ -1,12 +1,16 @@
 # Tyche Tagging
 
+[![Test](https://github.com/YakShavingCatHerder/tyche-tagging/workflows/Test%20Tyche%20Tagging%20Module/badge.svg)](https://github.com/YakShavingCatHerder/tyche-tagging/actions/workflows/test.yml)
+[![Security](https://github.com/YakShavingCatHerder/tyche-tagging/workflows/Security%20and%20Dependency%20Updates/badge.svg)](https://github.com/YakShavingCatHerder/tyche-tagging/actions/workflows/security.yml)
+[![Registry Test](https://github.com/YakShavingCatHerder/tyche-tagging/workflows/Test%20Module%20from%20Registry/badge.svg)](https://github.com/YakShavingCatHerder/tyche-tagging/actions/workflows/registry-test.yml)
+
 **Standardized cloud resource tagging for cost attribution and team accountability.**
 
 Eliminate unallocated cloud spend with consistent, automated tagging across all your cloud resources.
 
 ## Supported Providers
 
-- **AWS** - [terraform-aws-tyche-tags](./aws/) - Complete AWS resource tagging solution
+**AWS** - [terraform-aws-tyche-tags](./aws/) - Complete AWS resource tagging solution
 - **Azure** - Coming soon
 - **GCP** - Coming soon
 
@@ -60,6 +64,17 @@ Every resource gets these standard tags:
 
 - Terraform >= 1.0
 - Cloud Provider >= 4.0 (AWS), >= 3.0 (Azure), >= 4.0 (GCP)
+
+## CI/CD
+
+This project uses GitHub Actions for automated testing, security scanning, and releases:
+
+- **Testing**: Automated validation on every PR and push
+- **Security**: Weekly security scans and vulnerability checks
+- **Releases**: Automated releases to Terraform Registry
+- **Quality**: Code formatting, documentation validation, and integration tests
+
+See [.github/README.md](.github/README.md) for detailed workflow information. 
 
 ## Enterprise Features
 

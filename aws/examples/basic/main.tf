@@ -32,7 +32,7 @@ variable "tyche_config" {
 
 # Use the Tyche tagging module
 module "tyche_tags" {
-  source = "../.."  # Local path to module root
+  source = "YakShavingCatHerder/tyche-tagging/aws"
   
   team                = var.tyche_config.team
   project             = var.tyche_config.project

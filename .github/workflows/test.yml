@@ -1,0 +1,43 @@
+name: Test Module
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  TF_VERSION: '1.6.0'
+
+jobs:
+  test:
+    name: Test Module
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./aws
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: ${{ env.TF_VERSION }}
+
+    - name: Terraform Format Check
+      run: terraform fmt -check -recursive
+
+    - name: Terraform Validate
+      run: |
+        terraform init
+        terraform validate
+
+    - name: Test Example
+      run: |
+        cd examples/basic
+        terraform init
+        terraform validate
+        terraform plan

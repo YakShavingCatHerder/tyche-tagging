@@ -32,7 +32,7 @@ variable "tyche_config" {
 
 # Use the Tyche tagging module
 module "tyche_tags" {
-  source = "YakShavingCatHerder/tyche-tagging/aws"
+  source = "../.."
 
   team                = var.tyche_config.team
   project             = var.tyche_config.project
@@ -44,8 +44,9 @@ module "tyche_tags" {
 }
 
 # Example: Apply tags to an EC2 instance
+# Note: Replace with a valid AMI ID for your region
 resource "aws_instance" "example" {
-  ami           = "ami-0abcdef1234567890"
+  ami           = "ami-0c02fb55956c7d316"  # Amazon Linux 2 AMI (us-east-1)
   instance_type = "t3.micro"
 
   tags = module.tyche_tags.tags

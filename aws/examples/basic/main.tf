@@ -33,7 +33,7 @@ variable "tyche_config" {
 # Use the Tyche tagging module
 module "tyche_tags" {
   source = "YakShavingCatHerder/tyche-tagging/aws"
-  
+
   team                = var.tyche_config.team
   project             = var.tyche_config.project
   environment         = var.tyche_config.environment
@@ -47,14 +47,14 @@ module "tyche_tags" {
 resource "aws_instance" "example" {
   ami           = "ami-0abcdef1234567890"
   instance_type = "t3.micro"
-  
+
   tags = module.tyche_tags.tags
 }
 
 # Example: Apply specialized tags to an S3 bucket
 resource "aws_s3_bucket" "example" {
   bucket = "example-bucket-${random_string.suffix.result}"
-  
+
   tags = module.tyche_tags.tags_storage
 }
 

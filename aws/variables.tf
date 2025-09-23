@@ -1,7 +1,7 @@
 variable "team" {
   description = "Team name responsible for the resources (required for cost attribution)"
   type        = string
-  
+
   validation {
     condition     = length(var.team) > 0
     error_message = "Team name must not be empty."
@@ -11,7 +11,7 @@ variable "team" {
 variable "project" {
   description = "Project name that the resources belong to"
   type        = string
-  
+
   validation {
     condition     = length(var.project) > 0
     error_message = "Project name must not be empty."
@@ -21,7 +21,7 @@ variable "project" {
 variable "environment" {
   description = "Environment name (e.g., dev, staging, prod)"
   type        = string
-  
+
   validation {
     condition     = contains(["dev", "staging", "prod", "test"], var.environment)
     error_message = "Environment must be one of: dev, staging, prod, test."

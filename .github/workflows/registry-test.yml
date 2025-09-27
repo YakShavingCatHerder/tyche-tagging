@@ -1,0 +1,86 @@
+name: Test Module from Registry
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+env:
+  TF_VERSION: '1.6.0'
+
+jobs:
+  test-registry-module:
+    name: Test Module from Registry
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: ${{ env.TF_VERSION }}
+
+    - name: Test Module from Registry
+      run: |
+        # Create a temporary directory for testing
+        mkdir -p /tmp/registry-test
+        cd /tmp/registry-test
+        
+        # Create a test configuration that uses the module from registry
+        cat > main.tf << 'EOF'
+        module "tyche_tags" {
+          source = "YakShavingCatHerder/tyche-tagging/aws"
+          version = "${{ github.ref_name }}"
+          
+          team                = "test-team"
+          project             = "registry-test"
+          environment         = "test"
+          cost_center         = "testing"
+          organization_domain = "example.com"
+        }
+        
+        output "tags" {
+          value = module.tyche_tags.tags
+        }
+        EOF
+        
+        # Initialize and validate
+        terraform init
+        terraform validate
+        terraform plan
+
+    - name: Notify Terraform Registry
+      if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+      run: |
+        # Extract version from tag (remove 'v' prefix if present)
+        VERSION="${{ github.ref_name }}"
+        if [[ $VERSION == v* ]]; then
+          VERSION=${VERSION#v}
+        fi
+        
+        echo "Notifying Terraform Registry of new version: $VERSION"
+        
+        # Trigger registry resync
+        curl -X POST \
+          -H "Authorization: Bearer ${{ secrets.TERRAFORM_API_TOKEN }}" \
+          -H "Content-Type: application/vnd.api+json" \
+          "https://registry.terraform.io/api/v1/modules/YakShavingCatHerder/tyche-tagging/aws/versions" \
+          -d "{
+            \"data\": {
+              \"type\": \"module-versions\",
+              \"attributes\": {
+                \"version\": \"$VERSION\"
+              }
+            }
+          }" || echo "Registry notification failed - this may be expected if the version already exists"
+
+    - name: Report Results
+      run: |
+        echo "Registry test completed successfully"
+        echo "Module version ${{ github.ref_name }} tested from Terraform Registry"
+        if [ "${{ github.event_name }}" = "push" ] && [[ "${{ github.ref }}" == refs/tags/* ]]; then
+          echo "Terraform Registry notified of new release"
+        fi

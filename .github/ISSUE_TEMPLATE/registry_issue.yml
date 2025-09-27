@@ -1,0 +1,150 @@
+name: Terraform Registry Issue
+description: Report an issue with the module on the Terraform Registry
+title: "[REGISTRY] "
+labels: ["registry", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a Terraform Registry issue! This template is specifically for problems related to the module's availability, versioning, or functionality on the Terraform Registry.
+
+  - type: dropdown
+    id: issue_type
+    attributes:
+      label: Issue Type
+      description: What type of registry issue are you experiencing?
+      options:
+        - Module not found on registry
+        - Version not available
+        - Module download fails
+        - Module version mismatch
+        - Registry sync issue
+        - Documentation not showing
+        - Other registry issue
+    validations:
+      required: true
+
+  - type: input
+    id: module_source
+    attributes:
+      label: Module Source
+      description: The exact module source you're trying to use
+      placeholder: "YakShavingCatHerder/tyche-tagging/aws"
+    validations:
+      required: true
+
+  - type: input
+    id: module_version
+    attributes:
+      label: Module Version
+      description: The version you're trying to use (or "latest" if not specified)
+      placeholder: "1.0.5"
+    validations:
+      required: true
+
+  - type: input
+    id: terraform_version
+    attributes:
+      label: Terraform Version
+      description: What version of Terraform are you using?
+      placeholder: "1.6.0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: error_message
+    attributes:
+      label: Error Message
+      description: The exact error message you're seeing
+      render: shell
+      placeholder: |
+        Error: Failed to download module
+        
+        Could not download module "tyche_tags" (main.tf:1) source code from
+        "registry.terraform.io/YakShavingCatHerder/tyche-tagging/aws": no available releases match the given constraints.
+    validations:
+      required: true
+
+  - type: textarea
+    id: terraform_config
+    attributes:
+      label: Terraform Configuration
+      description: Your Terraform configuration that's causing the issue
+      render: hcl
+      placeholder: |
+        module "tyche_tags" {
+          source = "YakShavingCatHerder/tyche-tagging/aws"
+          version = "1.0.5"
+          
+          team                = "my-team"
+          project             = "my-project"
+          environment         = "prod"
+          cost_center         = "engineering"
+          organization_domain = "example.com"
+        }
+
+  - type: textarea
+    id: steps_to_reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: Steps to reproduce the registry issue
+      placeholder: |
+        1. Run `terraform init`
+        2. See error message
+        3. Check registry website
+        4. Confirm version exists/doesn't exist
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected_behavior
+    attributes:
+      label: Expected Behavior
+      description: What should happen when using this module?
+      placeholder: "The module should download and initialize successfully"
+    validations:
+      required: true
+
+  - type: textarea
+    id: registry_status
+    attributes:
+      label: Registry Status
+      description: What do you see on the Terraform Registry website?
+      placeholder: |
+        - Module page: https://registry.terraform.io/modules/YakShavingCatHerder/tyche-tagging/aws
+        - Available versions: [list what you see]
+        - Documentation: [describe what's shown]
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Your environment details
+      placeholder: |
+        - OS: [e.g. Ubuntu 20.04]
+        - Terraform CLI: [e.g. 1.6.0]
+        - Network: [e.g. corporate proxy, VPN, etc.]
+        - Region: [e.g. us-east-1]
+
+  - type: checkboxes
+    id: troubleshooting
+    attributes:
+      label: Troubleshooting Steps
+      description: Please check the following before submitting
+      options:
+        - label: I have checked the Terraform Registry website for the module
+        - label: I have tried clearing the Terraform cache (`rm -rf .terraform`)
+        - label: I have tried running `terraform init -upgrade`
+        - label: I have verified my network connectivity to registry.terraform.io
+        - label: I have checked for any corporate firewall/proxy issues
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://example.com)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true

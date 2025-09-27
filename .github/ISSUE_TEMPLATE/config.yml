@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://github.com/YakShavingCatHerder/tyche-tagging#readme
+    about: Please check our documentation first
+  - name: Discussions
+    url: https://github.com/YakShavingCatHerder/tyche-tagging/discussions
+    about: Ask questions and discuss ideas
+  - name: Terraform Registry
+    url: https://registry.terraform.io/modules/YakShavingCatHerder/tyche-tagging/aws
+    about: View the module on Terraform Registry

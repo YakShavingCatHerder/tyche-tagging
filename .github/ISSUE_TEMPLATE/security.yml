@@ -1,0 +1,136 @@
+name: Security Vulnerability Report
+description: Report a security vulnerability in the tyche-tagging module
+title: "[SECURITY] "
+labels: ["security", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **IMPORTANT: Security vulnerabilities should be reported privately to protect users.**
+        
+        Please **DO NOT** create a public issue for security vulnerabilities. Instead, please email us at [security@tyche.dev](mailto:security@tyche.dev) with the details.
+        
+        If you believe this is not a security issue, please use the [Bug Report](https://github.com/YakShavingCatHerder/tyche-tagging/issues/new?template=bug_report.yml) template instead.
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity Level
+      description: How severe is this security issue?
+      options:
+        - Critical (remote code execution, data breach)
+        - High (privilege escalation, authentication bypass)
+        - Medium (information disclosure, denial of service)
+        - Low (minor security issue)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: module_type
+    attributes:
+      label: Module Affected
+      description: Which module is affected by this vulnerability?
+      options:
+        - AWS Module
+        - Azure Module (coming soon)
+        - GCP Module (coming soon)
+        - CI/CD Workflows
+        - Documentation
+        - All Modules
+    validations:
+      required: true
+
+  - type: textarea
+    id: vulnerability_description
+    attributes:
+      label: Vulnerability Description
+      description: A clear and concise description of the security vulnerability.
+      placeholder: "Describe the security issue..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact
+      description: What is the potential impact of this vulnerability?
+      placeholder: "Describe the potential impact on users..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps_to_reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: Steps to reproduce the security issue (be careful not to expose sensitive information)
+      placeholder: |
+        1. Configure the module with...
+        2. Deploy to...
+        3. The vulnerability is exposed when...
+    validations:
+      required: true
+
+  - type: textarea
+    id: affected_versions
+    attributes:
+      label: Affected Versions
+      description: Which versions of the module are affected?
+      placeholder: "All versions, version 1.0.0 and above, etc."
+    validations:
+      required: true
+
+  - type: textarea
+    id: terraform_config
+    attributes:
+      label: Terraform Configuration
+      description: The Terraform configuration that exposes the vulnerability (remove any sensitive information)
+      render: hcl
+      placeholder: |
+        module "tyche_tags" {
+          source = "YakShavingCatHerder/tyche-tagging/aws"
+          version = "1.0.5"
+          
+          # Configuration that exposes the vulnerability
+        }
+
+  - type: textarea
+    id: suggested_fix
+    attributes:
+      label: Suggested Fix
+      description: Do you have any suggestions for how to fix this vulnerability?
+      placeholder: "Describe potential fixes or mitigations..."
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional Context
+      description: Any additional context about the vulnerability
+      placeholder: "Add any other context about the security issue here..."
+
+  - type: checkboxes
+    id: responsible_disclosure
+    attributes:
+      label: Responsible Disclosure
+      description: By submitting this security report, you agree to responsible disclosure practices
+      options:
+        - label: I agree to responsible disclosure practices and will not publicly disclose this vulnerability until it has been fixed
+          required: true
+        - label: I understand that this report will be handled confidentially
+          required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Next Steps
+        
+        After submitting this report:
+        
+        1. **Email us**: Send the details to [security@tyche.dev](mailto:security@tyche.dev)
+        2. **We'll respond**: We'll acknowledge receipt within 48 hours
+        3. **Investigation**: We'll investigate and provide updates
+        4. **Fix**: We'll work on a fix and coordinate disclosure
+        5. **Release**: We'll release a security update
+        
+        Thank you for helping keep our users safe!

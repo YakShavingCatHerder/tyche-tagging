@@ -28,5 +28,27 @@ jobs:
           
           ## Changes
           - Module updates and improvements
+          
+          ## Registry Test
+          The registry test workflow will automatically run to validate this release from the Terraform Registry.
         draft: false
         prerelease: false
+
+  registry-test:
+    name: Trigger Registry Test
+    runs-on: ubuntu-latest
+    needs: release
+    if: success()
+    
+    steps:
+    - name: Trigger Registry Test Workflow
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const { data } = await github.rest.actions.createWorkflowDispatch({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            workflow_id: 'registry-test.yml',
+            ref: context.ref
+          });
+          console.log('Registry test workflow triggered successfully');

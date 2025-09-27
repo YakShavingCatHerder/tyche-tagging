@@ -1,6 +1,8 @@
 name: Test Module from Registry
 
 on:
+  push:
+    branches: [ITER2/workflow_testing]
   workflow_run:
     workflows: ["Release"]
     types: [completed]

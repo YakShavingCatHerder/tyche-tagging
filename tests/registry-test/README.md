@@ -6,8 +6,9 @@ This directory contains tests for the tyche-tagging module from the Terraform Re
 
 ```bash
 cd tests/registry-test
+# Update version in main.tf if needed
 terraform init
-terraform plan -var="module_version=1.0.5"
+terraform plan
 ```
 
 ## Purpose

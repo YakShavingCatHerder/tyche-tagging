@@ -1,6 +1,6 @@
 module "tyche_tags" {
   source = "YakShavingCatHerder/tyche-tagging/aws"
-  version = var.module_version
+  version = "1.0.8"
   
   team                = "test-team"
   project             = "registry-test"

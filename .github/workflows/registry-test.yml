@@ -70,10 +70,13 @@ jobs:
         # Use the dedicated test directory
         cd tests/registry-test
         
+        # Update the version in main.tf
+        sed -i "s/version = \"[^\"]*\"/version = \"$VERSION\"/" main.tf
+        
         # Initialize and validate
         terraform init
         terraform validate
-        terraform plan -var="module_version=$VERSION"
+        terraform plan
 
     - name: Notify Terraform Registry
       if: github.event_name == 'workflow_run'

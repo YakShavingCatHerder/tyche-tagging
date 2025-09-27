@@ -1,6 +1,8 @@
 name: Test Module from Registry
 
 on:
+  push:
+    branches: [ITER2/workflow_testing]
   workflow_run:
     workflows: ["Release"]
     types: [completed]
@@ -41,6 +43,8 @@ jobs:
           VERSION="${{ github.event.inputs.version }}"
           if [ "$VERSION" = "latest" ]; then
             # Use latest tag from repository when "latest" is specified
+            echo "Fetching all tags from repository..."
+            git fetch --tags
             VERSION=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
             if [[ $VERSION == v* ]]; then
               VERSION=${VERSION#v}
@@ -50,10 +54,21 @@ jobs:
         else
           # Workflow run - extract version from the triggering release
           # Get the latest tag from the repository
+          echo "Fetching all tags from repository..."
+          git fetch --tags
           VERSION=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
           if [[ $VERSION == v* ]]; then
             VERSION=${VERSION#v}
           fi
+        fi
+        
+        # If we still have 0.0.0, try to get the latest available version from registry
+        if [ "$VERSION" = "0.0.0" ]; then
+          echo "No tags found in repository, checking Terraform Registry for latest version..."
+          # Try to get the latest version from the registry API
+          LATEST_REGISTRY_VERSION=$(curl -s "https://registry.terraform.io/v1/modules/YakShavingCatHerder/tyche-tagging/aws/versions" | jq -r '.modules[0].versions[0].version' 2>/dev/null || echo "1.0.5")
+          VERSION="$LATEST_REGISTRY_VERSION"
+          echo "Using latest version from Terraform Registry: $VERSION"
         fi
         
         echo "Testing module version: $VERSION"
@@ -85,9 +100,18 @@ jobs:
       if: github.event_name == 'workflow_run'
       run: |
         # Get the latest tag from the repository
+        echo "Fetching all tags from repository..."
+        git fetch --tags
         VERSION=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
         if [[ $VERSION == v* ]]; then
           VERSION=${VERSION#v}
+        fi
+        
+        # If we still have 0.0.0, try to get the latest available version from registry
+        if [ "$VERSION" = "0.0.0" ]; then
+          echo "No tags found in repository, checking Terraform Registry for latest version..."
+          LATEST_REGISTRY_VERSION=$(curl -s "https://registry.terraform.io/v1/modules/YakShavingCatHerder/tyche-tagging/aws/versions" | jq -r '.modules[0].versions[0].version' 2>/dev/null || echo "1.0.5")
+          VERSION="$LATEST_REGISTRY_VERSION"
         fi
         
         echo "Notifying Terraform Registry of new version: $VERSION"
@@ -109,7 +133,19 @@ jobs:
     - name: Report Results
       run: |
         echo "Registry test completed successfully"
+        echo "Fetching all tags from repository..."
+        git fetch --tags
         VERSION=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+        if [[ $VERSION == v* ]]; then
+          VERSION=${VERSION#v}
+        fi
+        
+        # If we still have 0.0.0, try to get the latest available version from registry
+        if [ "$VERSION" = "0.0.0" ]; then
+          LATEST_REGISTRY_VERSION=$(curl -s "https://registry.terraform.io/v1/modules/YakShavingCatHerder/tyche-tagging/aws/versions" | jq -r '.modules[0].versions[0].version' 2>/dev/null || echo "1.0.5")
+          VERSION="$LATEST_REGISTRY_VERSION"
+        fi
+        
         echo "Module version $VERSION tested from Terraform Registry"
         if [ "${{ github.event_name }}" = "workflow_run" ]; then
           echo "Terraform Registry notified of new release"

@@ -33,11 +33,7 @@ jobs:
 
     - name: Test Module from Registry
       run: |
-        # Create a temporary directory for testing
-        mkdir -p /tmp/registry-test
-        cd /tmp/registry-test
-        
-        # Determine version to test
+        # Determine version to test (before changing directories)
         if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
           # Manual dispatch with specified version
           VERSION="${{ github.event.inputs.version }}"
@@ -72,6 +68,10 @@ jobs:
         fi
         
         echo "Testing module version: $VERSION"
+        
+        # Create a temporary directory for testing
+        mkdir -p /tmp/registry-test
+        cd /tmp/registry-test
         
         # Create a test configuration that uses the module from registry
         cat > main.tf << EOF

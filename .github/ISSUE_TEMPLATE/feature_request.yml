@@ -1,0 +1,117 @@
+name: Feature Request
+description: Suggest a new feature or enhancement for the tyche-tagging module
+title: "[FEATURE] "
+labels: ["enhancement", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new feature! Please provide as much detail as possible to help us understand your use case and implement the feature effectively.
+
+  - type: dropdown
+    id: module_type
+    attributes:
+      label: Module Type
+      description: Which module would this feature affect?
+      options:
+        - AWS Module
+        - Azure Module (coming soon)
+        - GCP Module (coming soon)
+        - Documentation
+        - CI/CD Workflows
+        - All Modules
+    validations:
+      required: true
+
+  - type: dropdown
+    id: feature_type
+    attributes:
+      label: Feature Type
+      description: What type of feature is this?
+      options:
+        - New Tag
+        - New Output
+        - New Variable
+        - New Provider Support
+        - Documentation Improvement
+        - Workflow Enhancement
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: feature_description
+    attributes:
+      label: Feature Description
+      description: A clear and concise description of the feature you'd like to see.
+      placeholder: "Describe the feature..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: use_case
+    attributes:
+      label: Use Case
+      description: Describe the problem this feature would solve or the use case it would enable.
+      placeholder: "What problem does this solve? How would you use this feature?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed_solution
+    attributes:
+      label: Proposed Solution
+      description: Describe the solution you'd like to see implemented.
+      placeholder: "How should this feature work?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Describe any alternative solutions or workarounds you've considered.
+      placeholder: "What other approaches have you tried or considered?"
+
+  - type: textarea
+    id: example_usage
+    attributes:
+      label: Example Usage
+      description: Show how you would use this feature in your Terraform configuration.
+      render: hcl
+      placeholder: |
+        module "tyche_tags" {
+          source = "YakShavingCatHerder/tyche-tagging/aws"
+          
+          team                = "my-team"
+          project             = "my-project"
+          environment         = "prod"
+          cost_center         = "engineering"
+          organization_domain = "example.com"
+          
+          # New feature would go here
+        }
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this feature to you?
+      options:
+        - Critical (blocking my use case)
+        - High (would significantly improve my workflow)
+        - Medium (nice to have)
+        - Low (minor improvement)
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://example.com)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true

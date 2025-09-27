@@ -1,9 +1,10 @@
 name: Test Module from Registry
 
 on:
-  push:
-    tags:
-      - 'v*'
+  workflow_run:
+    workflows: ["Release"]
+    types: [completed]
+    branches: [main]
   workflow_dispatch:
     inputs:
       version:
@@ -43,8 +44,9 @@ jobs:
             exit 1
           fi
         else
-          # Tag push - extract version from tag
-          VERSION="${{ github.ref_name }}"
+          # Workflow run - extract version from the triggering release
+          # Get the latest tag from the repository
+          VERSION=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
           if [[ $VERSION == v* ]]; then
             VERSION=${VERSION#v}
           fi
@@ -76,10 +78,10 @@ jobs:
         terraform plan
 
     - name: Notify Terraform Registry
-      if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+      if: github.event_name == 'workflow_run'
       run: |
-        # Extract version from tag (remove 'v' prefix if present)
-        VERSION="${{ github.ref_name }}"
+        # Get the latest tag from the repository
+        VERSION=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
         if [[ $VERSION == v* ]]; then
           VERSION=${VERSION#v}
         fi
@@ -103,7 +105,8 @@ jobs:
     - name: Report Results
       run: |
         echo "Registry test completed successfully"
-        echo "Module version ${{ github.ref_name }} tested from Terraform Registry"
-        if [ "${{ github.event_name }}" = "push" ] && [[ "${{ github.ref }}" == refs/tags/* ]]; then
+        VERSION=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+        echo "Module version $VERSION tested from Terraform Registry"
+        if [ "${{ github.event_name }}" = "workflow_run" ]; then
           echo "Terraform Registry notified of new release"
         fi

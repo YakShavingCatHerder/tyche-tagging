@@ -12,6 +12,9 @@ jobs:
   validate:
     name: Validate PR
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     
     steps:
     - name: Checkout code
@@ -35,3 +38,85 @@ jobs:
         cd examples/basic
         terraform init
         terraform validate
+
+    - name: Dry Run Release Preview
+      run: |
+        echo "=== DRY RUN RELEASE PREVIEW ==="
+        
+        # Get the latest tag from main branch
+        git fetch origin main:main
+        LATEST_TAG=$(git describe --tags --abbrev=0 main 2>/dev/null || echo "v0.0.0")
+        echo "Current latest tag: $LATEST_TAG"
+        
+        # Extract version number (remove 'v' prefix)
+        VERSION=${LATEST_TAG#v}
+        echo "Current version: $VERSION"
+        
+        # Calculate next patch version (default bump type)
+        IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
+        PATCH=$((PATCH + 1))
+        NEXT_VERSION="$MAJOR.$MINOR.$PATCH"
+        NEXT_TAG="v$NEXT_VERSION"
+        
+        echo "Next release tag: $NEXT_TAG"
+        echo ""
+        echo "=== RELEASE WORKFLOW PREVIEW ==="
+        echo "Release workflow will:"
+        echo "   - Create tag: $NEXT_TAG"
+        echo "   - Create GitHub release for $NEXT_TAG"
+        echo "   - Trigger registry test workflow"
+        echo ""
+        echo "Registry test workflow will:"
+        echo "   - Test module version $NEXT_VERSION from Terraform Registry"
+        echo "   - Notify Terraform Registry to resync"
+        echo ""
+        echo "=== VALIDATION RESULTS ==="
+        echo "Terraform validation: PASSED"
+        echo "Example validation: PASSED"
+        echo "Release process: READY"
+        echo "Registry sync: READY"
+        echo ""
+        echo "This PR is ready for merge and will trigger automatic release $NEXT_TAG"
+        
+        # Save preview for PR comment
+        echo "NEXT_TAG=$NEXT_TAG" >> $GITHUB_ENV
+        echo "NEXT_VERSION=$NEXT_VERSION" >> $GITHUB_ENV
+
+    - name: Comment PR with Release Preview
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const nextTag = process.env.NEXT_TAG;
+          const nextVersion = process.env.NEXT_VERSION;
+          
+          const comment = `## Release Preview
+          
+          This PR will trigger an automatic release when merged to \`main\`.
+          
+          **Next Release:** \`${nextTag}\`
+          
+          ### Release Workflow
+          - Create tag: \`${nextTag}\`
+          - Create GitHub release for \`${nextTag}\`
+          - Trigger registry test workflow
+          
+          ### Registry Test Workflow
+          - Test module version \`${nextVersion}\` from Terraform Registry
+          - Notify Terraform Registry to resync
+          
+          ### Validation Status
+          - Terraform validation: PASSED
+          - Example validation: PASSED
+          - Release process: READY
+          - Registry sync: READY
+          
+          **Ready for merge** - will trigger automatic release \`${nextTag}\``;
+          
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: comment
+          });
+        

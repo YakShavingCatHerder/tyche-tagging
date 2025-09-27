@@ -5,6 +5,11 @@ on:
     tags:
       - 'v*'
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to test (e.g., 1.0.4)'
+        required: true
+        default: 'latest'
 
 env:
   TF_VERSION: '1.6.0'
@@ -29,10 +34,20 @@ jobs:
         mkdir -p /tmp/registry-test
         cd /tmp/registry-test
         
-        # Extract version from tag (remove 'v' prefix if present)
-        VERSION="${{ github.ref_name }}"
-        if [[ $VERSION == v* ]]; then
-          VERSION=${VERSION#v}
+        # Determine version to test
+        if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          # Manual dispatch with specified version
+          VERSION="${{ github.event.inputs.version }}"
+          if [ "$VERSION" = "latest" ]; then
+            echo "Error: Please specify a version for manual testing"
+            exit 1
+          fi
+        else
+          # Tag push - extract version from tag
+          VERSION="${{ github.ref_name }}"
+          if [[ $VERSION == v* ]]; then
+            VERSION=${VERSION#v}
+          fi
         fi
         
         echo "Testing module version: $VERSION"

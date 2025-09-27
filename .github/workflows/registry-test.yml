@@ -67,32 +67,13 @@ jobs:
         
         echo "Testing module version: $VERSION"
         
-        # Create a temporary directory for testing
-        mkdir -p /tmp/registry-test
-        cd /tmp/registry-test
-        
-        # Create a test configuration that uses the module from registry
-        cat > main.tf << EOF
-        module "tyche_tags" {
-          source = "YakShavingCatHerder/tyche-tagging/aws"
-          version = "$VERSION"
-          
-          team                = "test-team"
-          project             = "registry-test"
-          environment         = "test"
-          cost_center         = "testing"
-          organization_domain = "example.com"
-        }
-        
-        output "tags" {
-          value = module.tyche_tags.tags
-        }
-        EOF
+        # Use the dedicated test directory
+        cd tests/registry-test
         
         # Initialize and validate
         terraform init
         terraform validate
-        terraform plan
+        terraform plan -var="module_version=$VERSION"
 
     - name: Notify Terraform Registry
       if: github.event_name == 'workflow_run'

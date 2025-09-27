@@ -40,8 +40,12 @@ jobs:
           # Manual dispatch with specified version
           VERSION="${{ github.event.inputs.version }}"
           if [ "$VERSION" = "latest" ]; then
-            echo "Error: Please specify a version for manual testing"
-            exit 1
+            # Use latest tag from repository when "latest" is specified
+            VERSION=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+            if [[ $VERSION == v* ]]; then
+              VERSION=${VERSION#v}
+            fi
+            echo "Using latest version from repository: $VERSION"
           fi
         else
           # Workflow run - extract version from the triggering release

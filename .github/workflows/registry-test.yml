@@ -29,11 +29,19 @@ jobs:
         mkdir -p /tmp/registry-test
         cd /tmp/registry-test
         
+        # Extract version from tag (remove 'v' prefix if present)
+        VERSION="${{ github.ref_name }}"
+        if [[ $VERSION == v* ]]; then
+          VERSION=${VERSION#v}
+        fi
+        
+        echo "Testing module version: $VERSION"
+        
         # Create a test configuration that uses the module from registry
-        cat > main.tf << 'EOF'
+        cat > main.tf << EOF
         module "tyche_tags" {
           source = "YakShavingCatHerder/tyche-tagging/aws"
-          version = "${{ github.ref_name }}"
+          version = "$VERSION"
           
           team                = "test-team"
           project             = "registry-test"

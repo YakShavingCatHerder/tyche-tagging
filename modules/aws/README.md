@@ -7,31 +7,21 @@ This is the AWS provider module for Tyche Tagging. It provides consistent, autom
 > **Note**: This is a submodule of the [Tyche Tagging](https://github.com/YakShavingCatHerder/tyche-tagging) project. For multi-cloud support and the latest updates, see the main repository.
 
 ## What is this module?
-
 This is the AWS provider submodule of the Tyche Tagging project. It provides a standardized set of tags for AWS resources to enable cost attribution, team accountability, and governance. It generates consistent tags across all AWS resource types and is designed to be used as part of the larger Tyche Tagging ecosystem.
 
 **This module is:**
-<<<<<<< HEAD
-=======
-
->>>>>>> fa17ece ([ITER0] Update dir structure to match Tf Registry expectations)
 - An AWS-specific submodule of Tyche Tagging
 - Published to the Terraform Registry
 - Ready to use for AWS resource tagging
 - Part of a multi-cloud tagging solution
 
 **Use this module when you need:**
-<<<<<<< HEAD
-=======
-
->>>>>>> fa17ece ([ITER0] Update dir structure to match Tf Registry expectations)
 - Consistent tagging across all AWS resources
 - Cost attribution and team accountability
 - Automated governance tags
 - Multi-account AWS environment support
 
 ## Features
-
 - **Consistent tagging** across all AWS resource types
 - **Cost attribution** with team, project, and environment tracking
 - **Automatic governance tags** (creation date, owner, managed by)
@@ -39,14 +29,9 @@ This is the AWS provider submodule of the Tyche Tagging project. It provides a s
 - **Flexible configuration** via simple tfvars files
 
 ## Quick Start
-
 This module is designed to be used directly in your Terraform configurations. Here's how to get started:
 
 1. **Create configuration file:**
-<<<<<<< HEAD
-=======
-
->>>>>>> fa17ece ([ITER0] Update dir structure to match Tf Registry expectations)
 ```hcl
 # tyche.tfvars
 tyche_config = {
@@ -58,10 +43,6 @@ tyche_config = {
 ```
 
 2. **Use the module:**
-<<<<<<< HEAD
-=======
-
->>>>>>> fa17ece ([ITER0] Update dir structure to match Tf Registry expectations)
 ```hcl
 module "tyche_tags" {
   source = "YakShavingCatHerder/tyche-tagging/aws"
@@ -81,10 +62,6 @@ resource "aws_instance" "web" {
 ```
 
 3. **Deploy:**
-<<<<<<< HEAD
-=======
-
->>>>>>> fa17ece ([ITER0] Update dir structure to match Tf Registry expectations)
 ```bash
 terraform apply -var-file="tyche.tfvars"
 ```
@@ -92,10 +69,6 @@ terraform apply -var-file="tyche.tfvars"
 ## Generated Tags
 
 Every resource gets these standard tags:
-<<<<<<< HEAD
-=======
-
->>>>>>> fa17ece ([ITER0] Update dir structure to match Tf Registry expectations)
 | Tag             | Example                       | Purpose               |
 | --------------- | ----------------------------- | --------------------- |
 | `Team`        | `platform-team`             | Cost attribution      |
@@ -109,19 +82,13 @@ Every resource gets these standard tags:
 | `AWSRegion`   | `us-east-1`                 | Regional context      |
 
 ## Requirements
-
 - Terraform >= 1.0
 - AWS Provider >= 4.0
 
 ## Validation
-
 This module has been validated using:
 
 ### Manual Testing
-<<<<<<< HEAD
-=======
-
->>>>>>> fa17ece ([ITER0] Update dir structure to match Tf Registry expectations)
 ```bash
 # Test module initialization and planning
 cd examples/basic
@@ -135,10 +102,6 @@ terraform plan -var-file="test.tfvars"
 ### Generated Tags Example
 
 When configured with:
-<<<<<<< HEAD
-=======
-
->>>>>>> fa17ece ([ITER0] Update dir structure to match Tf Registry expectations)
 ```hcl
 team        = "test-team"
 project     = "test-project" 
@@ -147,10 +110,6 @@ cost_center = "engineering"
 ```
 
 The module generates these tags:
-<<<<<<< HEAD
-=======
-
->>>>>>> fa17ece ([ITER0] Update dir structure to match Tf Registry expectations)
 - `Team`: `test-team`
 - `Project`: `test-project`
 - `Environment`: `dev`
@@ -162,10 +121,6 @@ The module generates these tags:
 - `AWSRegion`: `us-east-1`
 
 ### Input Validation
-<<<<<<< HEAD
-=======
-
->>>>>>> fa17ece ([ITER0] Update dir structure to match Tf Registry expectations)
 - Empty team names are rejected
 - Invalid environments are rejected
 - Empty project names are rejected
@@ -178,12 +133,7 @@ See the [examples/](./examples/) directory for complete usage examples.
 ## Enterprise Features
 
 Looking for advanced features like compliance scanning, cost optimization, or ML-powered attribution?
-<<<<<<< HEAD
-Contact us about [Tyche Enterprise](mailto:yakshavingcatherder@pm.me) solutions.
-=======
-Contact us about [Tyche Enterprise](mailto:enterprise@tyche.dev) solutions.
->>>>>>> fa17ece ([ITER0] Update dir structure to match Tf Registry expectations)
+Contact me about [Tyche Enterprise](mailto:yakshavingcatherder@pm.me) solutions.
 
 ## License
-
 MIT License - see [LICENSE](./LICENSE) for details.

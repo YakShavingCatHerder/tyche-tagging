@@ -124,9 +124,10 @@ All workflows support manual dispatch:
 Add these badges to your README:
 
 ```markdown
-![Test](https://github.com/YakShavingCatHerder/tyche-tagging/workflows/Test%20Tyche%20Tagging%20Module/badge.svg)
-![Security](https://github.com/YakShavingCatHerder/tyche-tagging/workflows/Security%20and%20Dependency%20Updates/badge.svg)
-![Release](https://github.com/YakShavingCatHerder/tyche-tagging/workflows/Release%20and%20Publish/badge.svg)
+[![Test](https://github.com/YakShavingCatHerder/tyche-tagging/workflows/Test%20Module/badge.svg)](https://github.com/YakShavingCatHerder/tyche-tagging/actions/workflows/test.yml)
+[![PR Validation](https://github.com/YakShavingCatHerder/tyche-tagging/workflows/PR%20Validation/badge.svg)](https://github.com/YakShavingCatHerder/tyche-tagging/actions/workflows/pr-validation.yml)
+[![Release](https://github.com/YakShavingCatHerder/tyche-tagging/workflows/Release/badge.svg)](https://github.com/YakShavingCatHerder/tyche-tagging/actions/workflows/release.yml)
+[![Registry Test](https://github.com/YakShavingCatHerder/tyche-tagging/workflows/Test%20Module%20from%20Registry/badge.svg)](https://github.com/YakShavingCatHerder/tyche-tagging/actions/workflows/registry-test.yml)
 ```
 
 ## Troubleshooting
